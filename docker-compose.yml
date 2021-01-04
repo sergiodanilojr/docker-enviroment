@@ -1,0 +1,59 @@
+version: "3"
+services:
+#Servidor PHP
+  php:
+    build: ./docker/php
+    container_name: php
+    volumes:
+      - ./app:/var/www/html
+    links:
+      - db
+    networks: 
+      - enviroment-network
+#Servidor Web APACHE
+  web: 
+    build: ./docker/apache
+    container_name: apache
+    volumes:
+      - ./app:/var/www/html
+    environment:
+      - "TZ=${TZ}"
+    ports: 
+      - "80:80"
+    links:
+      - php
+    networks: 
+      - enviroment-network
+#Servidor Banco de Dados Maria DB
+  db:
+    image: mariadb
+    container_name: db
+    ports: 
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_USER: root
+      MYSQL_PASSWORD: enviroment
+      MYSQL_ROOT_PASSWORD: enviroment
+    volumes:
+      - ./docker/database:/var/lib/mysql
+    networks: 
+      - enviroment-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    links:
+      - db
+    ports:
+      - 8181:80
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: enviroment
+      PMA_ARBITRARY: 1
+    networks: 
+     - enviroment-network
+networks: 
+    enviroment-network:
+        driver: bridge
