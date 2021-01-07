@@ -23,15 +23,15 @@ RUN apt-get update && apt-get install -y \
     && locale-gen
 
 ENV \
-    MAINTAINER="Dev OneNext" \
-    EMAIL=dev@onenext.com.br \
+    MAINTAINER="Sérgio Danilo Jr" \
+    EMAIL=sergiodanilojr@hotmail.com \
     TERM=xterm \
-    TZ=America/Campo_Grande \
+    TZ=America/Sao_Paulo \
     PS1='\u@\h:\w\$ ' \
     DOMAIN=intranet.br
 
 RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
+RUN ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 RUN "date"
 
 RUN docker-php-ext-configure gd \

@@ -1,6 +1,6 @@
 version: "3"
 services:
-#Servidor PHP
+  #Servidor PHP
   php:
     build: ./docker/php
     container_name: php
@@ -8,37 +8,35 @@ services:
       - ./app:/var/www/html
     links:
       - db
-    networks: 
-      - enviroment-network
-#Servidor Web APACHE
-  web: 
+    networks:
+      - project-network
+  #Servidor Web APACHE
+  web:
     build: ./docker/apache
     container_name: apache
     volumes:
       - ./app:/var/www/html
-    environment:
-      - "TZ=${TZ}"
-    ports: 
+    ports:
       - "80:80"
     links:
       - php
-    networks: 
-      - enviroment-network
-#Servidor Banco de Dados Maria DB
+    networks:
+      - project-network
+  #Servidor Banco de Dados Maria DB
   db:
     image: mariadb
     container_name: db
-    ports: 
+    ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: database
-      MYSQL_USER: root
-      MYSQL_PASSWORD: enviroment
-      MYSQL_ROOT_PASSWORD: enviroment
+      MYSQL_DATABASE: elephpant
+      #      MYSQL_USER: root
+      MYSQL_PASSWORD: usuario37
+      MYSQL_ROOT_PASSWORD: usuario37
     volumes:
       - ./docker/database:/var/lib/mysql
-    networks: 
-      - enviroment-network
+    networks:
+      - project-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -50,10 +48,10 @@ services:
       - 8181:80
     environment:
       MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: enviroment
+      MYSQL_ROOT_PASSWORD: usuario37
       PMA_ARBITRARY: 1
-    networks: 
-     - enviroment-network
-networks: 
-    enviroment-network:
-        driver: bridge
+    networks:
+      - project-network
+networks:
+  project-network:
+    driver: bridge
