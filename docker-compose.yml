@@ -9,7 +9,7 @@ services:
     links:
       - db
     networks:
-      - project-network
+      - profiti-network
   #Servidor Web APACHE
   web:
     build: ./docker/apache
@@ -17,11 +17,11 @@ services:
     volumes:
       - ./app:/var/www/html
     ports:
-      - "80:80"
+      - "3000:80" #Porta a ser acessada via Localhost
     links:
       - php
     networks:
-      - project-network
+      - profiti-network
   #Servidor Banco de Dados Maria DB
   db:
     image: mariadb
@@ -29,14 +29,14 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: elephpant
-      #      MYSQL_USER: root
-      MYSQL_PASSWORD: usuario37
-      MYSQL_ROOT_PASSWORD: usuario37
+      MYSQL_DATABASE: profiti
+     #MYSQL_USER: root
+      MYSQL_PASSWORD: profiti
+      MYSQL_ROOT_PASSWORD: profiti
     volumes:
       - ./docker/database:/var/lib/mysql
     networks:
-      - project-network
+      - profiti-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -48,10 +48,10 @@ services:
       - 8181:80
     environment:
       MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: usuario37
+      MYSQL_ROOT_PASSWORD: profiti
       PMA_ARBITRARY: 1
     networks:
-      - project-network
+      - profiti-network
 networks:
-  project-network:
+  profiti-network:
     driver: bridge

@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   autoconf \
@@ -26,7 +26,7 @@ ENV \
     MAINTAINER="Sérgio Danilo Jr" \
     EMAIL=sergiodanilojr@hotmail.com \
     TERM=xterm \
-    TZ=America/Sao_Paulo \
+
     PS1='\u@\h:\w\$ ' \
     DOMAIN=intranet.br
 
