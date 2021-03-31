@@ -28,18 +28,17 @@ ENV \
     TERM=xterm \
 
     PS1='\u@\h:\w\$ ' \
-    DOMAIN=intranet.br
+    DOMAIN=sergiodanilojr.com.br
 
 RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+#RUN ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+RUN echo "America/Sao_Paulo" > /etc/timezone
 RUN "date"
 
-RUN docker-php-ext-configure gd \
-  --with-png-dir=/usr/include/ \
-  --with-jpeg-dir=/usr/include/ \
-  --with-freetype-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
-RUN docker-php-ext-configure zip --with-libzip
+
+RUN docker-php-ext-configure zip
 
 RUN docker-php-ext-install gd intl pdo_mysql pdo_pgsql mysqli zip sodium mbstring \
   && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
