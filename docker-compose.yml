@@ -17,7 +17,7 @@ services:
     volumes:
       - ./app:/var/www/html
     ports:
-      - "3000:80" #Porta a ser acessada via Localhost
+      - "8000:80" #Porta a ser acessada via Localhost
     links:
       - php
     networks:
