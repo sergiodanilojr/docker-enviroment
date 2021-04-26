@@ -9,7 +9,7 @@ services:
     links:
       - db
     networks:
-      - summer-network
+      - divbr-network
   #Servidor Web APACHE
   web:
     build: ./docker/apache
@@ -21,7 +21,7 @@ services:
     links:
       - php
     networks:
-      - summer-network
+      - divbr-network
   #Servidor Banco de Dados Maria DB
   db:
     image: mysql
@@ -29,14 +29,14 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: summer
-      MYSQL_USER: summer
-      MYSQL_PASSWORD: summer
-      MYSQL_ROOT_PASSWORD: summer
+      MYSQL_DATABASE: divbr
+      MYSQL_USER: divbr
+      MYSQL_PASSWORD: divbr
+      MYSQL_ROOT_PASSWORD: divbr
     volumes:
       - ./docker/database:/var/lib/mysql
     networks:
-      - summer-network
+      - divbr-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -47,11 +47,11 @@ services:
     ports:
       - 8181:80
     environment:
-      MYSQL_USERNAME: summer
-      MYSQL_ROOT_PASSWORD: summer
+      MYSQL_USERNAME: divbr
+      MYSQL_ROOT_PASSWORD: divbr
       PMA_ARBITRARY: 1
     networks:
-      - summer-network
+      - divbr-network
 networks:
-  summer-network:
+  divbr-network:
     driver: bridge
